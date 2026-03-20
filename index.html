@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Для тебя 💖</title>
+    <title>Для Карины 💖</title>
     <style>
         * {
             margin: 0;
@@ -15,7 +15,7 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(145deg, #ffe6f0 0%, #fbc4d5 100%);
+            background: linear-gradient(145deg, #ffe9f0 0%, #fcc9d7 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -23,19 +23,19 @@
             padding: 16px;
             position: relative;
             overflow: hidden;
-            touch-action: pan-x pan-y; /* разрешаем скролл, но жесты обрабатываем */
+            touch-action: pan-x pan-y;
         }
 
         /* Главная карточка */
         .card {
-            background: rgba(255, 250, 245, 0.92);
-            backdrop-filter: blur(16px);
+            background: rgba(255, 251, 248, 0.94);
+            backdrop-filter: blur(18px);
             border-radius: 56px;
             padding: 1.8rem 1.5rem;
-            max-width: 460px;
+            max-width: 440px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.6);
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.6);
             transition: transform 0.2s ease;
             animation: gentleFloat 4s infinite ease-in-out;
             z-index: 15;
@@ -44,55 +44,63 @@
 
         @keyframes gentleFloat {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
+            50% { transform: translateY(-4px); }
             100% { transform: translateY(0px); }
         }
 
         .heart-icon {
-            font-size: 4rem;
+            font-size: 3.8rem;
             display: inline-block;
             animation: pulse 1.4s infinite;
-            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.1));
-            margin-bottom: 6px;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08));
+            margin-bottom: 4px;
         }
 
         @keyframes pulse {
             0% { transform: scale(1); }
-            100% { transform: scale(1.08); }
+            100% { transform: scale(1.06); }
         }
 
         h1 {
             font-size: 1.9rem;
             font-weight: 600;
-            background: linear-gradient(135deg, #d43f6b, #f06292);
+            background: linear-gradient(135deg, #d43f6b, #f06a92);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .greeting-name {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #e2779a;
             margin-bottom: 12px;
+            letter-spacing: -0.2px;
         }
 
         .compliment-box {
-            font-size: 1.2rem;
-            line-height: 1.45;
+            font-size: 1.15rem;
+            line-height: 1.4;
             color: #9b4b6b;
-            background: #fff0f5;
-            padding: 12px 18px;
+            background: #fff4f8;
+            padding: 12px 16px;
             border-radius: 60px;
-            margin: 18px 0;
+            margin: 16px 0;
             font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05), 0 2px 6px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02), 0 2px 6px rgba(0,0,0,0.03);
         }
 
         .counter {
-            background: rgba(255, 215, 225, 0.7);
+            background: rgba(255, 220, 230, 0.8);
             border-radius: 40px;
-            padding: 8px 16px;
+            padding: 6px 16px;
             display: inline-flex;
             align-items: baseline;
             gap: 8px;
             font-weight: 600;
-            margin: 6px 0 8px;
+            margin: 8px 0 10px;
             font-size: 1rem;
             color: #b3436b;
         }
@@ -106,11 +114,11 @@
         .tap-hint {
             font-size: 0.7rem;
             color: #e68aaa;
-            background: rgba(255,235,240,0.8);
+            background: rgba(255, 240, 245, 0.8);
             display: inline-block;
-            padding: 6px 14px;
+            padding: 5px 14px;
             border-radius: 40px;
-            margin-top: 12px;
+            margin-top: 8px;
         }
 
         .toggle-container {
@@ -119,10 +127,10 @@
             justify-content: center;
             gap: 10px;
             margin-top: 16px;
-            font-size: 0.8rem;
-            background: rgba(255,240,245,0.8);
+            font-size: 0.75rem;
+            background: rgba(255, 240, 245, 0.8);
             border-radius: 50px;
-            padding: 6px 12px;
+            padding: 5px 12px;
             width: fit-content;
             margin-left: auto;
             margin-right: auto;
@@ -131,8 +139,8 @@
         .toggle-switch {
             position: relative;
             display: inline-block;
-            width: 46px;
-            height: 24px;
+            width: 44px;
+            height: 22px;
         }
         .toggle-switch input {
             opacity: 0;
@@ -147,7 +155,7 @@
             right: 0;
             bottom: 0;
             background-color: #f3b0c2;
-            transition: 0.3s;
+            transition: 0.2s;
             border-radius: 34px;
         }
         .slider:before {
@@ -156,22 +164,22 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 20px;
-            width: 20px;
+            height: 18px;
+            width: 18px;
             left: 2px;
             bottom: 2px;
             background-color: white;
-            transition: 0.3s;
+            transition: 0.2s;
             border-radius: 50%;
-            font-size: 12px;
+            font-size: 11px;
         }
         input:checked + .slider:before {
             transform: translateX(22px);
             content: "✨";
         }
 
-        /* Canvas для сердечек и звезд */
-        #interactiveCanvas {
+        /* Canvas для эффектов */
+        #effectCanvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -181,37 +189,42 @@
             z-index: 20;
         }
 
-        /* Элементы, которые можно лопать (кликабельные сердечки) */
+        /* Плавающие сердечки (кликабельные) */
         .pop-heart {
             position: fixed;
             pointer-events: auto;
             cursor: pointer;
             z-index: 25;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-            transition: transform 0.05s linear;
+            transition: transform 0.1s ease;
+            will-change: transform;
         }
 
         .bg-bubble {
             position: absolute;
-            background: radial-gradient(circle, rgba(255,190,210,0.5) 0%, rgba(255,140,170,0.2) 100%);
+            background: radial-gradient(circle, rgba(255, 180, 200, 0.4) 0%, rgba(255, 140, 170, 0.15) 100%);
             border-radius: 50%;
-            animation: floatBg 18s infinite linear;
+            animation: floatBg 20s infinite linear;
             pointer-events: none;
             z-index: 0;
         }
 
         @keyframes floatBg {
             0% { transform: translateY(100vh) scale(0.3); opacity: 0; }
-            20% { opacity: 0.5; }
+            20% { opacity: 0.4; }
             100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
         }
 
         @media (max-width: 480px) {
             .card {
-                padding: 1.5rem 1.2rem;
+                padding: 1.4rem 1.2rem;
             }
             .compliment-box {
                 font-size: 1rem;
+                padding: 10px 12px;
+            }
+            .greeting-name {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -221,9 +234,10 @@
     <div id="bgDecor"></div>
     <div class="card" id="mainCard">
         <div class="heart-icon">🌸💕</div>
-        <h1>Моей нежности</h1>
+        <h1>Для тебя</h1>
+        <div class="greeting-name">✨ Карина ✨</div>
         <div class="compliment-box" id="complimentText">
-            Ты — мой самый тёплый лучик 💛
+            Твоя улыбка — как самый тёплый лучик ☀️
         </div>
         <div class="counter">
             💋 поцелуйчиков: <span id="kissCount">0</span>
@@ -237,40 +251,44 @@
             <span>✨ наклонные сердечки</span>
         </div>
         <div class="tap-hint">
-            👆 тапай → летят сердечки + комплимент &nbsp;&nbsp; ✨ води пальцем → звёздный след
+            👆 тапай → сердечки + комплимент &nbsp;&nbsp; ✨ води пальцем → звёздный след
         </div>
-        <div class="tap-hint" style="margin-top: 6px;">
-            🫂 зажми карточку → обнимашки &nbsp;&nbsp; 💖 нажимай на плавающие сердечки — они лопаются!
+        <div class="tap-hint" style="margin-top: 4px;">
+            🫂 зажми карточку → обнимашки &nbsp;&nbsp; 💖 нажимай на плавающие сердечки — лопаются!
         </div>
     </div>
 
-    <canvas id="interactiveCanvas"></canvas>
+    <canvas id="effectCanvas"></canvas>
     <div id="popHeartsContainer"></div>
 
     <script>
-        // ---------- ИНТЕРАКТИВ ----------
+        // ========== ПЕРСОНАЛЬНЫЕ ДАННЫЕ ДЛЯ КАРИНЫ ==========
+        const KISS_STORAGE_KEY = 'karina_kiss_count';  // необязательно, просто приятно сохранять
         let kissCounter = 0;
         const kissCountSpan = document.getElementById('kissCount');
         const complimentDiv = document.getElementById('complimentText');
 
+        // Комплименты с именем Карины
         const compliments = [
-            "Твоя улыбка — как тёплое утро ☀️",
-            "Ты делаешь мир цветным 🎨",
-            "С тобой даже облака становятся сладкими 🍬",
-            "Ты — волшебство, которое я встречаю каждый день ✨",
-            "Моё сердце стучит громче, когда ты рядом 💓",
-            "Ты пахнешь счастьем 🌸",
+            "Карина, ты — моя любимая мелодия 🎶",
+            "Твои глаза сияют ярче всех звёзд ✨",
+            "Карина, с тобой даже дождь становится уютным ☔️",
+            "Ты — волшебство, которое я встречаю каждый день 💖",
+            "Карина, ты делаешь мой мир цветным 🎨",
+            "Твоя нежность — как самый сладкий пирожное 🍰",
+            "Карина, ты пахнешь счастьем 🌸",
             "Ты — лучший сюрприз в моей жизни 🎁",
-            "Твои глаза — два океана нежности 🌊",
-            "Каждый миг с тобой — маленький праздник 🎉",
-            "Ты умеешь согревать одним сообщением 🔥",
-            "С тобой я чувствую себя дома 🏡",
-            "Ты — моя любимая мелодия 🎶"
+            "Карина, каждое твоё сообщение — праздник 📱",
+            "Ты умеешь согревать одним взглядом 🔥",
+            "Карина, с тобой я чувствую себя дома 🏡",
+            "Ты — моя любимая сказка 📖",
+            "Карина, твой смех — лучшее лекарство 😄",
+            "Ты — самая нежная девушка на свете 🥰"
         ];
 
         function updateCompliment() {
             const random = Math.floor(Math.random() * compliments.length);
-            complimentDiv.style.transform = 'scale(0.97)';
+            complimentDiv.style.transform = 'scale(0.96)';
             setTimeout(() => {
                 complimentDiv.innerText = compliments[random];
                 complimentDiv.style.transform = '';
@@ -281,17 +299,15 @@
             kissCounter++;
             kissCountSpan.innerText = kissCounter;
             updateCompliment();
-            // лёгкая вибрация если есть
             if (window.navigator && window.navigator.vibrate) {
-                window.navigator.vibrate(20);
+                window.navigator.vibrate(15);
             }
         }
 
-        // ---------- CANVAS: сердечки и звёздный след ----------
-        const canvas = document.getElementById('interactiveCanvas');
+        // ========== CANVAS: сердечки и звёздный след (оптимизировано) ==========
+        const canvas = document.getElementById('effectCanvas');
         let ctx = canvas.getContext('2d');
-        let particles = []; // сердечки и звёзды
-        let starsTrail = []; // для следа от пальца
+        let particles = [];
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -299,45 +315,44 @@
         }
         window.addEventListener('resize', () => {
             resizeCanvas();
-            resizePopHearts();
+            repositionFloatingHearts();
         });
         resizeCanvas();
 
-        class HeartParticle {
-            constructor(x, y, size, vx, vy, color, type = 'heart') {
+        class Particle {
+            constructor(x, y, size, vx, vy, type, color) {
                 this.x = x;
                 this.y = y;
                 this.size = size;
                 this.vx = vx;
                 this.vy = vy;
+                this.type = type; // 'heart' или 'star'
                 this.color = color;
-                this.type = type;
                 this.life = 1;
                 this.decay = 0.018;
                 this.rotation = Math.random() * Math.PI * 2;
-                this.rotSpeed = (Math.random() - 0.5) * 0.1;
-                this.gravity = 0.08;
+                this.rotSpeed = (Math.random() - 0.5) * 0.08;
+                this.gravity = 0.07;
             }
+
             draw(ctx) {
                 ctx.save();
                 ctx.translate(this.x, this.y);
                 ctx.rotate(this.rotation);
                 ctx.globalAlpha = this.life * 0.85;
+                ctx.shadowBlur = 4;
                 if (this.type === 'heart') {
                     ctx.fillStyle = this.color;
-                    ctx.shadowBlur = 6;
-                    ctx.shadowColor = "rgba(255, 80, 120, 0.6)";
+                    ctx.shadowColor = "rgba(255, 80, 120, 0.5)";
                     ctx.beginPath();
-                    const topCurve = this.size * 0.5;
-                    ctx.moveTo(0, topCurve);
+                    const top = this.size * 0.5;
+                    ctx.moveTo(0, top);
                     ctx.bezierCurveTo(-this.size, -this.size * 0.6, -this.size * 0.8, this.size * 0.4, 0, this.size * 0.8);
-                    ctx.bezierCurveTo(this.size * 0.8, this.size * 0.4, this.size, -this.size * 0.6, 0, topCurve);
+                    ctx.bezierCurveTo(this.size * 0.8, this.size * 0.4, this.size, -this.size * 0.6, 0, top);
                     ctx.fill();
                 } else {
-                    // звездочка
-                    ctx.fillStyle = `rgba(255, 220, 100, ${0.9 * this.life})`;
-                    ctx.shadowBlur = 5;
-                    ctx.shadowColor = "gold";
+                    ctx.fillStyle = `rgba(255, 220, 100, ${0.85 * this.life})`;
+                    ctx.shadowColor = "rgba(255, 200, 50, 0.5)";
                     ctx.beginPath();
                     for (let i = 0; i < 5; i++) {
                         const angle = (i * 72 - 90) * Math.PI / 180;
@@ -354,52 +369,58 @@
                 }
                 ctx.restore();
             }
+
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
                 this.vy += this.gravity;
                 this.life -= this.decay;
                 this.rotation += this.rotSpeed;
-                return this.life > 0 && this.y < canvas.height + 100 && this.x > -200 && this.x < canvas.width + 200;
+                return this.life > 0 && this.y < canvas.height + 100 && this.x > -150 && this.x < canvas.width + 150;
             }
         }
 
         function addHeartBurst(x, y, count = 5) {
             for (let i = 0; i < count; i++) {
-                const size = Math.random() * 10 + 6;
+                const size = Math.random() * 9 + 5;
                 const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 2 + 1;
-                const vx = Math.cos(angle) * speed * (Math.random() - 0.5);
-                const vy = Math.sin(angle) * speed * 1.2 - 1.5;
-                const color = `hsl(${340 + Math.random() * 30}, 80%, 65%)`;
-                particles.push(new HeartParticle(x, y, size, vx, vy, color, 'heart'));
+                const speed = Math.random() * 2 + 0.8;
+                const vx = Math.cos(angle) * speed * (Math.random() - 0.5) * 1.2;
+                const vy = Math.sin(angle) * speed * 1.2 - 1.2;
+                const hue = 340 + Math.random() * 30;
+                const color = `hsl(${hue}, 80%, 65%)`;
+                particles.push(new Particle(x, y, size, vx, vy, 'heart', color));
             }
         }
 
         function addStarTrail(x, y) {
-            const star = new HeartParticle(x, y, Math.random() * 5 + 3, (Math.random() - 0.5) * 1.2, (Math.random() - 1.5) * 1, '#FFD966', 'star');
-            star.gravity = 0.02;
-            star.decay = 0.03;
+            const size = Math.random() * 4 + 2.5;
+            const vx = (Math.random() - 0.5) * 1.2;
+            const vy = (Math.random() - 1.2) * 0.8;
+            const star = new Particle(x, y, size, vx, vy, 'star', '#FFE484');
+            star.gravity = 0.03;
+            star.decay = 0.025;
             particles.push(star);
         }
 
-        // след пальца/мыши
+        // След от пальца (оптимизирован — меньше частиц)
         let lastX = null, lastY = null;
         function handleMove(e) {
-            if (!e.clientX && !e.touches) return;
             let x, y;
             if (e.touches) {
                 x = e.touches[0].clientX;
                 y = e.touches[0].clientY;
                 e.preventDefault();
-            } else {
+            } else if (e.clientX) {
                 x = e.clientX;
                 y = e.clientY;
+            } else {
+                return;
             }
             if (lastX !== null) {
                 const dist = Math.hypot(x - lastX, y - lastY);
-                if (dist > 8) {
-                    const steps = Math.min(5, Math.floor(dist / 6));
+                if (dist > 12) {
+                    const steps = Math.min(3, Math.floor(dist / 10));
                     for (let i = 0; i <= steps; i++) {
                         const t = i / steps;
                         const ix = lastX + (x - lastX) * t;
@@ -437,7 +458,7 @@
         }
         animateParticles();
 
-        // ---------- ЛОПАЮЩИЕСЯ ПЛАВАЮЩИЕ СЕРДЕЧКИ (DOM-элементы) ----------
+        // ========== ПЛАВАЮЩИЕ СЕРДЕЧКИ (лопаются) ==========
         let floatingHearts = [];
         const popContainer = document.getElementById('popHeartsContainer');
 
@@ -445,8 +466,8 @@
             const heartDiv = document.createElement('div');
             heartDiv.className = 'pop-heart';
             const size = Math.floor(Math.random() * 28 + 24);
-            const leftPos = Math.random() * (window.innerWidth - 60);
-            const topPos = Math.random() * (window.innerHeight - 120);
+            const leftPos = Math.random() * (window.innerWidth - 70);
+            const topPos = Math.random() * (window.innerHeight - 100);
             heartDiv.style.left = leftPos + 'px';
             heartDiv.style.top = topPos + 'px';
             heartDiv.style.width = size + 'px';
@@ -455,50 +476,45 @@
             heartDiv.innerHTML = ['❤️','💖','💗','💓','🌸','💕','💘','🩷'][Math.floor(Math.random()*8)];
             heartDiv.style.textAlign = 'center';
             heartDiv.style.lineHeight = size + 'px';
-            heartDiv.style.transition = 'all 0.2s ease';
             heartDiv.addEventListener('click', (e) => {
                 e.stopPropagation();
-                // лопаем: анимация исчезновения + взрыв частиц
                 heartDiv.style.transform = 'scale(0)';
-                setTimeout(() => {
-                    if (heartDiv.parentNode) heartDiv.remove();
-                }, 150);
-                addHeartBurst(e.clientX, e.clientY, 6);
-                addKiss(); // за лопнутое сердечко тоже поцелуйчик!
+                setTimeout(() => heartDiv.remove(), 150);
+                addHeartBurst(e.clientX, e.clientY, 5);
+                addKiss();
                 floatingHearts = floatingHearts.filter(h => h !== heartDiv);
             });
             popContainer.appendChild(heartDiv);
             floatingHearts.push(heartDiv);
-            // через 12 секунд исчезнет само
             setTimeout(() => {
                 if (heartDiv.parentNode) {
                     heartDiv.style.opacity = '0';
                     setTimeout(() => heartDiv.remove(), 300);
                     floatingHearts = floatingHearts.filter(h => h !== heartDiv);
                 }
-            }, 10000);
+            }, 12000);
         }
 
-        function resizePopHearts() {
+        function repositionFloatingHearts() {
             floatingHearts.forEach(h => {
                 if (h.parentNode) {
                     let left = parseFloat(h.style.left);
                     let top = parseFloat(h.style.top);
-                    if (left > window.innerWidth - 50) left = window.innerWidth - 60;
-                    if (top > window.innerHeight - 70) top = window.innerHeight - 80;
-                    h.style.left = Math.max(10, left) + 'px';
-                    h.style.top = Math.max(10, top) + 'px';
+                    left = Math.min(Math.max(left, 10), window.innerWidth - 60);
+                    top = Math.min(Math.max(top, 20), window.innerHeight - 80);
+                    h.style.left = left + 'px';
+                    h.style.top = top + 'px';
                 }
             });
         }
 
-        // генерим плавающие сердечки каждые 7 секунд
+        // Создаём плавающие сердечки
         setInterval(() => {
-            if (floatingHearts.length < 8) createFloatingHeart();
-        }, 7000);
-        for (let i = 0; i < 3; i++) setTimeout(() => createFloatingHeart(), i * 800);
+            if (floatingHearts.length < 7) createFloatingHeart();
+        }, 8000);
+        for (let i = 0; i < 3; i++) setTimeout(() => createFloatingHeart(), i * 1000);
 
-        // ---------- КЛИК/ТАП по экрану: сердечки + поцелуй ----------
+        // ========== ТАПЫ (сердечки + поцелуй) ==========
         function onTap(e) {
             let x, y;
             if (e.touches) {
@@ -509,24 +525,24 @@
                 x = e.clientX;
                 y = e.clientY;
             }
-            addHeartBurst(x, y, 8);
+            addHeartBurst(x, y, 6);
             addKiss();
         }
         document.body.addEventListener('click', onTap);
         document.body.addEventListener('touchstart', onTap, { passive: false });
 
-        // ---------- ДОЛГОЕ НАЖАТИЕ (обнимашки) ----------
+        // ========== ДОЛГОЕ НАЖАТИЕ = обнимашки ==========
         let longPressTimer = null;
         const card = document.getElementById('mainCard');
         function showHug() {
             const hugDiv = document.createElement('div');
-            hugDiv.innerText = '🫂 Обнимаю крепко-крепко! 🫂';
+            hugDiv.innerText = '🫂 Обнимаю Карину крепко-крепко! 🫂';
             hugDiv.style.position = 'fixed';
             hugDiv.style.bottom = '30%';
             hugDiv.style.left = '50%';
             hugDiv.style.transform = 'translateX(-50%)';
-            hugDiv.style.background = 'rgba(255,215,225,0.95)';
-            hugDiv.style.backdropFilter = 'blur(8px)';
+            hugDiv.style.background = 'rgba(255, 215, 225, 0.96)';
+            hugDiv.style.backdropFilter = 'blur(12px)';
             hugDiv.style.padding = '12px 24px';
             hugDiv.style.borderRadius = '60px';
             hugDiv.style.fontWeight = 'bold';
@@ -537,90 +553,86 @@
             hugDiv.style.boxShadow = '0 10px 20px rgba(0,0,0,0.2)';
             document.body.appendChild(hugDiv);
             setTimeout(() => hugDiv.remove(), 2000);
-            addHeartBurst(window.innerWidth/2, window.innerHeight/2, 12);
-            if (window.navigator.vibrate) window.navigator.vibrate(100);
+            addHeartBurst(window.innerWidth/2, window.innerHeight/2, 10);
+            if (window.navigator.vibrate) window.navigator.vibrate(80);
         }
-        card.addEventListener('touchstart', (e) => {
-            longPressTimer = setTimeout(() => {
-                showHug();
-                longPressTimer = null;
-            }, 500);
+        card.addEventListener('touchstart', () => {
+            longPressTimer = setTimeout(showHug, 500);
         });
         card.addEventListener('touchend', () => {
             if (longPressTimer) clearTimeout(longPressTimer);
         });
         card.addEventListener('mousedown', () => {
-            longPressTimer = setTimeout(() => showHug(), 500);
+            longPressTimer = setTimeout(showHug, 500);
         });
         card.addEventListener('mouseup', () => {
             if (longPressTimer) clearTimeout(longPressTimer);
         });
 
-        // ---------- ГИРОСКОП (наклонные сердечки) ----------
+        // ========== ГИРОСКОП (по желанию) ==========
         let gyroActive = false;
         let gyroX = 0, gyroY = 0;
-        const toggle = document.getElementById('gyroToggle');
-        toggle.addEventListener('change', (e) => {
+        const gyroToggle = document.getElementById('gyroToggle');
+        function handleOrientation(event) {
+            if (!gyroActive) return;
+            gyroX = event.gamma || 0;
+            gyroY = event.beta || 0;
+            // мягко влияем на частицы
+            for (let p of particles) {
+                p.vx += gyroX * 0.025;
+                p.vy += gyroY * 0.02;
+                if (p.vx > 2.5) p.vx = 2.5;
+                if (p.vx < -2.5) p.vx = -2.5;
+                if (p.vy > 2.5) p.vy = 2.5;
+                if (p.vy < -2.5) p.vy = -2.5;
+            }
+        }
+        gyroToggle.addEventListener('change', (e) => {
             gyroActive = e.target.checked;
-            if (gyroActive && typeof DeviceOrientationEvent !== 'undefined') {
-                if (DeviceOrientationEvent.requestPermission && typeof DeviceOrientationEvent.requestPermission === 'function') {
-                    // iOS: просим разрешение при первом клике
-                    const requestGyro = () => {
-                        DeviceOrientationEvent.requestPermission()
-                            .then(permissionState => {
-                                if (permissionState === 'granted') {
-                                    window.addEventListener('deviceorientation', handleOrientation);
-                                }
-                            }).catch(console.warn);
-                        document.body.removeEventListener('click', requestGyro);
-                    };
-                    document.body.addEventListener('click', requestGyro);
-                    alert("📱 Нажми ещё раз где угодно, чтобы разрешить гироскоп — сердечки будут наклоняться вместе с телефоном!");
+            if (gyroActive) {
+                if (typeof DeviceOrientationEvent !== 'undefined' && DeviceOrientationEvent.requestPermission) {
+                    // iOS: запрос разрешения при первом клике на переключатель
+                    DeviceOrientationEvent.requestPermission()
+                        .then(permissionState => {
+                            if (permissionState === 'granted') {
+                                window.addEventListener('deviceorientation', handleOrientation);
+                            } else {
+                                gyroToggle.checked = false;
+                                gyroActive = false;
+                            }
+                        })
+                        .catch(() => {
+                            gyroToggle.checked = false;
+                            gyroActive = false;
+                        });
                 } else {
                     window.addEventListener('deviceorientation', handleOrientation);
                 }
-            } else if (!gyroActive) {
+            } else {
                 window.removeEventListener('deviceorientation', handleOrientation);
-                gyroX = 0; gyroY = 0;
             }
         });
-        function handleOrientation(event) {
-            gyroX = event.gamma;  // -90..90
-            gyroY = event.beta;
-            // применяем влияние на частицы (добавляем дополнительную силу)
-            if (gyroActive) {
-                for (let p of particles) {
-                    p.vx += gyroX * 0.03;
-                    p.vy += gyroY * 0.02;
-                    // ограничим скорость
-                    if (p.vx > 3) p.vx = 3;
-                    if (p.vx < -3) p.vx = -3;
-                    if (p.vy > 3) p.vy = 3;
-                    if (p.vy < -3) p.vy = -3;
-                }
-            }
-        }
 
-        // фоновые пузырьки
+        // ========== ФОНОВЫЕ ПУЗЫРЬКИ ==========
         function createBgBubbles() {
             const container = document.getElementById('bgDecor');
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 12; i++) {
                 const b = document.createElement('div');
                 b.classList.add('bg-bubble');
-                const sz = Math.random() * 80 + 30;
+                const sz = Math.random() * 70 + 30;
                 b.style.width = sz + 'px';
                 b.style.height = sz + 'px';
                 b.style.left = Math.random() * 100 + '%';
-                b.style.animationDuration = Math.random() * 12 + 8 + 's';
-                b.style.animationDelay = Math.random() * 10 + 's';
+                b.style.animationDuration = Math.random() * 14 + 8 + 's';
+                b.style.animationDelay = Math.random() * 12 + 's';
                 container.appendChild(b);
             }
         }
         createBgBubbles();
 
-        // приветственный эффект
+        // Приветственный взрыв сердечек
         setTimeout(() => {
-            addHeartBurst(window.innerWidth/2, window.innerHeight/2, 12);
+            addHeartBurst(window.innerWidth/2, window.innerHeight/2, 10);
         }, 300);
     </script>
 </body>
