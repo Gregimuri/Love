@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Для Карины 💖</title>
+    <title>Для Карины от Гриши 💖</title>
     <style>
         * {
             margin: 0;
@@ -26,7 +26,6 @@
             touch-action: pan-x pan-y;
         }
 
-        /* Главная карточка */
         .card {
             background: rgba(255, 251, 248, 0.94);
             backdrop-filter: blur(18px);
@@ -121,7 +120,6 @@
             margin-top: 8px;
         }
 
-        /* Canvas для эффектов */
         #effectCanvas {
             position: fixed;
             top: 0;
@@ -132,7 +130,6 @@
             z-index: 20;
         }
 
-        /* Плавающие сердечки (кликабельные) */
         .pop-heart {
             position: fixed;
             pointer-events: auto;
@@ -182,11 +179,11 @@
 
     <div id="bgDecor"></div>
     <div class="card" id="mainCard">
-        <div class="heart-icon">🌸💕</div>
-        <h1>Для тебя</h1>
-        <div class="greeting-name">✨ Карина ✨</div>
+        <div class="heart-icon">🌸</div>
+        <h1>Для Карины</h1>
+        <div class="greeting-name">✨ от Гриши ✨</div>
         <div class="compliment-box" id="complimentText">
-            Твоя улыбка — как самый тёплый лучик ☀️
+            Гриша знает: твоя улыбка — как самый тёплый лучик ☀️
         </div>
         <div class="counter">
             💋 поцелуйчиков: <span id="kissCount">0</span>
@@ -203,27 +200,23 @@
     <div id="popHeartsContainer"></div>
 
     <script>
-        // ========== ПЕРСОНАЛЬНЫЕ ДАННЫЕ ДЛЯ КАРИНЫ ==========
+        // ========== ПЕРСОНАЛЬНО: ОТ ГРИШИ ДЛЯ КАРИНЫ ==========
         let kissCounter = 0;
         const kissCountSpan = document.getElementById('kissCount');
         const complimentDiv = document.getElementById('complimentText');
 
-        // Комплименты с именем Карины
+        // Комплименты с упоминанием Гриши
         const compliments = [
-            "Карина, ты — моя любимая мелодия 🎶",
-            "Твои глаза сияют ярче всех звёзд ✨",
-            "Карина, с тобой даже дождь становится уютным ☔️",
-            "Ты — волшебство, которое я встречаю каждый день 💖",
-            "Карина, ты делаешь мой мир цветным 🎨",
+            "Гриша уверен, что твои глаза сияют ярче всех звёзд ✨",
+            "Ты — волшебство, которое Гриша встречает каждый день 💖",
+            "Карина, ты делаешь мир для Гриши цветным 🎨",
             "Твоя нежность — как самый сладкий пирожное 🍰",
-            "Карина, ты пахнешь счастьем 🌸",
-            "Ты — лучший сюрприз в моей жизни 🎁",
-            "Карина, каждое твоё сообщение — праздник 📱",
+            "Ты — лучший сюрприз в жизни Гриши 🎁",
+            "Карина, каждое твоё сообщение для Гриши — праздник 📱",
             "Ты умеешь согревать одним взглядом 🔥",
-            "Карина, с тобой я чувствую себя дома 🏡",
-            "Ты — моя любимая сказка 📖",
-            "Карина, твой смех — лучшее лекарство 😄",
-            "Ты — самая нежная девушка на свете 🥰"
+            "Ты — любимая сказка Гриши 📖",
+            "Гриша обожает твой смех 😄",
+            "Карина, ты — самая нежная девушка на свете 🥰"
         ];
 
         function updateCompliment() {
@@ -266,7 +259,7 @@
                 this.size = size;
                 this.vx = vx;
                 this.vy = vy;
-                this.type = type; // 'heart' или 'star'
+                this.type = type;
                 this.color = color;
                 this.life = 1;
                 this.decay = 0.018;
@@ -343,7 +336,6 @@
             particles.push(star);
         }
 
-        // След от пальца
         let lastX = null, lastY = null;
         function handleMove(e) {
             let x, y;
@@ -416,7 +408,7 @@
             heartDiv.style.display = 'flex';
             heartDiv.style.alignItems = 'center';
             heartDiv.style.justifyContent = 'center';
-            heartDiv.innerHTML = ['❤️','💖','💗','💓','🌸','💕','💘','🩷'][Math.floor(Math.random()*8)];
+            heartDiv.innerHTML = ['❤️','💖','💗','💓','🌸','💕','💘'][Math.floor(Math.random()*8)];
             
             const handlePop = (e) => {
                 e.stopPropagation();
@@ -485,12 +477,12 @@
         document.body.addEventListener('click', onTap);
         document.body.addEventListener('touchstart', onTap, { passive: false });
 
-        // ========== ДОЛГОЕ НАЖАТИЕ = обнимашки ==========
+        // ========== ДОЛГОЕ НАЖАТИЕ = обнимашки от Гриши ==========
         let longPressTimer = null;
         const card = document.getElementById('mainCard');
         function showHug() {
             const hugDiv = document.createElement('div');
-            hugDiv.innerText = '🫂 Обнимаю Карину крепко-крепко! 🫂';
+            hugDiv.innerText = '🫂 Гриша обнимает Карину крепко-крепко! 🫂';
             hugDiv.style.position = 'fixed';
             hugDiv.style.bottom = '30%';
             hugDiv.style.left = '50%';
