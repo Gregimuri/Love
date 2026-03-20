@@ -121,63 +121,6 @@
             margin-top: 8px;
         }
 
-        .toggle-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 16px;
-            font-size: 0.75rem;
-            background: rgba(255, 240, 245, 0.8);
-            border-radius: 50px;
-            padding: 5px 12px;
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 44px;
-            height: 22px;
-        }
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #f3b0c2;
-            transition: 0.2s;
-            border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "😊";
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 18px;
-            width: 18px;
-            left: 2px;
-            bottom: 2px;
-            background-color: white;
-            transition: 0.2s;
-            border-radius: 50%;
-            font-size: 11px;
-        }
-        input:checked + .slider:before {
-            transform: translateX(22px);
-            content: "✨";
-        }
-
         /* Canvas для эффектов */
         #effectCanvas {
             position: fixed;
@@ -198,7 +141,6 @@
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
             transition: transform 0.1s ease;
             will-change: transform;
-            /* увеличиваем зону касания */
             padding: 8px;
             margin: -8px;
             background: transparent;
@@ -248,14 +190,6 @@
         </div>
         <div class="counter">
             💋 поцелуйчиков: <span id="kissCount">0</span>
-        </div>
-        <div class="toggle-container">
-            <span>💖 гироскоп</span>
-            <label class="toggle-switch">
-                <input type="checkbox" id="gyroToggle">
-                <span class="slider"></span>
-            </label>
-            <span>✨ наклонные сердечки</span>
         </div>
         <div class="tap-hint">
             👆 тапай → сердечки + комплимент &nbsp;&nbsp; ✨ води пальцем → звёздный след
@@ -310,7 +244,7 @@
             }
         }
 
-        // ========== CANVAS: сердечки и звёздный след (оптимизировано) ==========
+        // ========== CANVAS: сердечки и звёздный след ==========
         const canvas = document.getElementById('effectCanvas');
         let ctx = canvas.getContext('2d');
         let particles = [];
@@ -464,7 +398,7 @@
         }
         animateParticles();
 
-        // ========== ПЛАВАЮЩИЕ СЕРДЕЧКИ (ИСПРАВЛЕННЫЕ ДЛЯ ТАЧА) ==========
+        // ========== ПЛАВАЮЩИЕ СЕРДЕЧКИ ==========
         let floatingHearts = [];
         const popContainer = document.getElementById('popHeartsContainer');
 
@@ -484,16 +418,13 @@
             heartDiv.style.justifyContent = 'center';
             heartDiv.innerHTML = ['❤️','💖','💗','💓','🌸','💕','💘','🩷'][Math.floor(Math.random()*8)];
             
-            // Обработчик нажатия (отдельно для мыши и тача)
             const handlePop = (e) => {
                 e.stopPropagation();
                 e.preventDefault();
-                // Визуальный отклик
                 heartDiv.style.transform = 'scale(0)';
-                // Взрыв частиц
                 addHeartBurst(e.clientX || (e.touches ? e.touches[0].clientX : 0), 
                                e.clientY || (e.touches ? e.touches[0].clientY : 0), 6);
-                addKiss();  // увеличиваем счётчик
+                addKiss();
                 setTimeout(() => {
                     if (heartDiv.parentNode) heartDiv.remove();
                     floatingHearts = floatingHearts.filter(h => h !== heartDiv);
@@ -506,7 +437,6 @@
             popContainer.appendChild(heartDiv);
             floatingHearts.push(heartDiv);
             
-            // Автоисчезновение через 12 секунд
             setTimeout(() => {
                 if (heartDiv.parentNode) {
                     heartDiv.style.opacity = '0';
@@ -529,29 +459,25 @@
             });
         }
 
-        // Создаём плавающие сердечки (редко, чтобы не перегружать)
         setInterval(() => {
             if (floatingHearts.length < 6) createFloatingHeart();
         }, 8000);
-        // Несколько сразу при старте
         setTimeout(() => { for(let i=0;i<3;i++) setTimeout(createFloatingHeart, i*500); }, 500);
 
-        // ========== ТАПЫ ПО ЭКРАНУ (сердечки + поцелуй) ==========
+        // ========== ТАПЫ ПО ЭКРАНУ ==========
         function onTap(e) {
             let x, y;
             if (e.touches) {
                 x = e.touches[0].clientX;
                 y = e.touches[0].clientY;
-                // Не отменяем полностью, чтобы не мешать кликам по сердечкам, но отменяем скролл
                 if (e.cancelable) e.preventDefault();
             } else {
                 x = e.clientX;
                 y = e.clientY;
             }
-            // Проверяем, что клик не по плавающему сердечку (чтобы не дублировать)
             let target = e.target;
             if (target && target.classList && target.classList.contains('pop-heart')) {
-                return; // сердечко само обработает
+                return;
             }
             addHeartBurst(x, y, 6);
             addKiss();
@@ -595,48 +521,6 @@
         });
         card.addEventListener('mouseup', () => {
             if (longPressTimer) clearTimeout(longPressTimer);
-        });
-
-        // ========== ГИРОСКОП ==========
-        let gyroActive = false;
-        let gyroX = 0, gyroY = 0;
-        const gyroToggle = document.getElementById('gyroToggle');
-        function handleOrientation(event) {
-            if (!gyroActive) return;
-            gyroX = event.gamma || 0;
-            gyroY = event.beta || 0;
-            for (let p of particles) {
-                p.vx += gyroX * 0.025;
-                p.vy += gyroY * 0.02;
-                if (p.vx > 2.5) p.vx = 2.5;
-                if (p.vx < -2.5) p.vx = -2.5;
-                if (p.vy > 2.5) p.vy = 2.5;
-                if (p.vy < -2.5) p.vy = -2.5;
-            }
-        }
-        gyroToggle.addEventListener('change', (e) => {
-            gyroActive = e.target.checked;
-            if (gyroActive) {
-                if (typeof DeviceOrientationEvent !== 'undefined' && DeviceOrientationEvent.requestPermission) {
-                    DeviceOrientationEvent.requestPermission()
-                        .then(permissionState => {
-                            if (permissionState === 'granted') {
-                                window.addEventListener('deviceorientation', handleOrientation);
-                            } else {
-                                gyroToggle.checked = false;
-                                gyroActive = false;
-                            }
-                        })
-                        .catch(() => {
-                            gyroToggle.checked = false;
-                            gyroActive = false;
-                        });
-                } else {
-                    window.addEventListener('deviceorientation', handleOrientation);
-                }
-            } else {
-                window.removeEventListener('deviceorientation', handleOrientation);
-            }
         });
 
         // ========== ФОНОВЫЕ ПУЗЫРЬКИ ==========
