@@ -1,0 +1,372 @@
+Вот пример одностраничного сайта (HTML-документа), который ты можешь отправить ей как файл или залить на хостинг. Он адаптирован под телефон, имеет нежный дизайн и интерактив: при нажатии на экран летят сердечки.
+
+Скопируй код ниже, сохрани его в файл с расширением `.html` (например, `for_her.html`) и отправь ей. Когда она откроет его на телефоне, увидит милое послание.
+
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Для тебя ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* Чтобы текст не выделялся, чисто для эстетики */
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #ffdde1 0%, #ee9ca7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            padding: 20px;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Главная карточка */
+        .card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            border-radius: 48px;
+            padding: 2.2rem 1.8rem;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255,255,255,0.5);
+            transition: transform 0.2s ease;
+            animation: gentleFloat 3s infinite ease-in-out;
+            z-index: 10;
+        }
+
+        @keyframes gentleFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Анимированное сердечко вверху */
+        .heart-icon {
+            font-size: 4.2rem;
+            display: inline-block;
+            animation: pulse 1.4s infinite;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+            margin-bottom: 10px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.9; }
+            100% { transform: scale(1.08); opacity: 1; }
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #c2366b, #e84393);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .message {
+            font-size: 1.25rem;
+            line-height: 1.45;
+            color: #4a2b3a;
+            margin: 20px 0;
+            font-weight: 500;
+            text-wrap: balance;
+        }
+
+        .small-note {
+            font-size: 0.9rem;
+            color: #b35f7a;
+            background: rgba(255, 215, 225, 0.6);
+            padding: 8px 14px;
+            border-radius: 60px;
+            display: inline-block;
+            margin-top: 8px;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Подпись с датой */
+        .date {
+            margin-top: 28px;
+            font-size: 0.75rem;
+            color: #b4718a;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Кнопка-подсказка */
+        .tap-hint {
+            margin-top: 24px;
+            font-size: 0.7rem;
+            color: #e27c9e;
+            background: rgba(255,245,240,0.7);
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            font-weight: 500;
+        }
+
+        /* Падающие сердечки (canvas) */
+        #heartCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        /* Очень легкая анимация для фона */
+        .bg-bubble {
+            position: absolute;
+            background: rgba(255, 210, 220, 0.3);
+            border-radius: 50%;
+            animation: floatBg 14s infinite linear;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes floatBg {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            20% { opacity: 0.4; }
+            100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+        }
+
+        /* Адаптация для маленьких экранов */
+        @media (max-width: 480px) {
+            .card {
+                padding: 1.8rem 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .message {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Фоновые декоративные кружки (пузырьки) -->
+    <div id="bgDecor"></div>
+
+    <!-- Главная карточка с текстом -->
+    <div class="card" id="mainCard">
+        <div class="heart-icon">🌸</div>
+        <h1>Моему солнышку</h1>
+        <div class="message">
+            ✨ Если бы я мог собрать все звёзды,<br>
+            я бы выбрал только одну — ту,<br>
+            что светит в моём телефоне.<br>
+            💖 Ты делаешь мой мир лучше.<br>
+            Просто потому что ты есть.
+        </div>
+        <div class="small-note">
+            🤍 Каждый день с тобой — маленькое чудо 🤍
+        </div>
+        <div class="date" id="dateField"></div>
+        <div class="tap-hint">
+            👆 коснись экрана — поцелую 💋
+        </div>
+    </div>
+
+    <!-- Canvas для летающих сердечек -->
+    <canvas id="heartCanvas"></canvas>
+
+    <script>
+        // === Милая дата (сегодняшняя, но можно задать особенную) ===
+        const dateElement = document.getElementById('dateField');
+        const now = new Date();
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        let formattedDate = now.toLocaleDateString('ru-RU', options);
+        // Делаем первую букву заглавной в месяце (аккуратно)
+        formattedDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+        dateElement.innerHTML = `✨ ${formattedDate} ✨`;
+
+        // === Фоновые "пузырьки" (для объема) ===
+        function createBubbles() {
+            const container = document.getElementById('bgDecor');
+            const bubbleCount = 12;
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bg-bubble');
+                const size = Math.random() * 100 + 40;
+                bubble.style.width = size + 'px';
+                bubble.style.height = size + 'px';
+                bubble.style.left = Math.random() * 100 + '%';
+                bubble.style.animationDuration = Math.random() * 8 + 6 + 's';
+                bubble.style.animationDelay = Math.random() * 8 + 's';
+                bubble.style.background = `radial-gradient(circle, rgba(255,200,210,0.4) 0%, rgba(255,170,190,0.2) 100%)`;
+                container.appendChild(bubble);
+            }
+        }
+        createBubbles();
+
+        // === СЕРДЕЧКИ ПРИ КАСАНИИ ===
+        const canvas = document.getElementById('heartCanvas');
+        let ctx = canvas.getContext('2d');
+        let heartsArray = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+        });
+        resizeCanvas();
+
+        class Heart {
+            constructor(x, y, size, speedX, speedY, opacity, rotation) {
+                this.x = x;
+                this.y = y;
+                this.size = size;
+                this.speedX = speedX;
+                this.speedY = speedY;
+                this.opacity = opacity;
+                this.rotation = rotation;
+                this.gravity = 0.08;
+                this.life = 1;       // от 1 до 0, исчезает
+                this.fade = 0.02;
+            }
+
+            draw(ctx) {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.globalAlpha = this.opacity * this.life;
+                ctx.fillStyle = `rgba(255, 80, 120, ${0.9 * this.life})`;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = "rgba(255, 80, 120, 0.5)";
+                // Рисуем форму сердечка
+                ctx.beginPath();
+                const topCurve = this.size * 0.5;
+                ctx.moveTo(0, topCurve);
+                ctx.bezierCurveTo(-this.size, -this.size * 0.6, -this.size * 0.8, this.size * 0.4, 0, this.size * 0.8);
+                ctx.bezierCurveTo(this.size * 0.8, this.size * 0.4, this.size, -this.size * 0.6, 0, topCurve);
+                ctx.fill();
+                // добавляем блик
+                ctx.beginPath();
+                ctx.fillStyle = `rgba(255, 200, 210, ${0.6 * this.life})`;
+                ctx.moveTo(-this.size * 0.2, -this.size * 0.1);
+                ctx.quadraticCurveTo(0, -this.size * 0.4, this.size * 0.2, -this.size * 0.1);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.speedY += this.gravity;
+                this.life -= this.fade;
+                this.rotation += 0.03;
+                return this.life > 0 && this.y < canvas.height + 100 && this.x > -100 && this.x < canvas.width + 100;
+            }
+        }
+
+        function addHeart(x, y) {
+            // Создаем от 3 до 8 сердечек за одно касание, чтобы было пышно
+            const count = Math.floor(Math.random() * 6) + 4;
+            for (let i = 0; i < count; i++) {
+                const size = Math.random() * 14 + 8;
+                const speedX = (Math.random() - 0.5) * 3.5;
+                const speedY = (Math.random() - 1.5) * 4 - 2;
+                const opacity = Math.random() * 0.5 + 0.6;
+                const rotation = Math.random() * Math.PI * 2;
+                // небольшой разброс координат, чтобы было естественно
+                const offsetX = (Math.random() - 0.5) * 28;
+                const offsetY = (Math.random() - 0.5) * 28;
+                heartsArray.push(new Heart(x + offsetX, y + offsetY, size, speedX, speedY, opacity, rotation));
+            }
+        }
+
+        function animateHearts() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < heartsArray.length; i++) {
+                const heart = heartsArray[i];
+                const alive = heart.update();
+                if (alive) {
+                    heart.draw(ctx);
+                } else {
+                    heartsArray.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animateHearts);
+        }
+        animateHearts();
+
+        // Обработка касаний (и для мыши, и для тапа)
+        function handleHeartSpawn(e) {
+            let clientX, clientY;
+            if (e.touches) {
+                // touch event
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+                e.preventDefault(); // предотвращаем скролл/зум, но не мешаем
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+            addHeart(clientX, clientY);
+            
+            // Небольшая вибрация, если устройство поддерживает (милый фидбек)
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(30);
+            }
+        }
+
+        // Вешаем события на всё окно, чтобы сердечки летели откуда угодно
+        document.body.addEventListener('click', (e) => {
+            handleHeartSpawn(e);
+        });
+        document.body.addEventListener('touchstart', (e) => {
+            handleHeartSpawn(e);
+        });
+
+        // Добавим эффект "дрожания" сердечек на карточке, если долго нажать, но это не обязательно
+        // просто для радости сделаем небольшую анимацию при нажатии на саму карточку
+        const card = document.getElementById('mainCard');
+        card.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // маленькая рябь на карточке (добавим класс на мгновение)
+            card.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                card.style.transform = '';
+            }, 120);
+        });
+        
+        // Также для тач-устройств, чтобы не мешать скроллу, но canvas ловит всё
+        canvas.style.pointerEvents = 'none'; // чтобы касания проходили сквозь canvas на карточку
+        document.body.style.touchAction = 'manipulation'; // улучшает отзывчивость
+
+        // Инициализируем пару стартовых сердечек, чтобы при открытии сразу был "вау" эффект
+        setTimeout(() => {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            addHeart(centerX, centerY + 40);
+            setTimeout(() => {
+                addHeart(centerX - 30, centerY + 20);
+                addHeart(centerX + 30, centerY + 20);
+            }, 150);
+        }, 200);
+    </script>
+</body>
+</html>
+```
