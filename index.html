@@ -194,10 +194,17 @@
             position: fixed;
             pointer-events: auto;
             cursor: pointer;
-            z-index: 25;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            z-index: 30;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
             transition: transform 0.1s ease;
             will-change: transform;
+            /* увеличиваем зону касания */
+            padding: 8px;
+            margin: -8px;
+            background: transparent;
+        }
+        .pop-heart:active {
+            transform: scale(0.85);
         }
 
         .bg-bubble {
@@ -263,7 +270,6 @@
 
     <script>
         // ========== ПЕРСОНАЛЬНЫЕ ДАННЫЕ ДЛЯ КАРИНЫ ==========
-        const KISS_STORAGE_KEY = 'karina_kiss_count';  // необязательно, просто приятно сохранять
         let kissCounter = 0;
         const kissCountSpan = document.getElementById('kissCount');
         const complimentDiv = document.getElementById('complimentText');
@@ -403,7 +409,7 @@
             particles.push(star);
         }
 
-        // След от пальца (оптимизирован — меньше частиц)
+        // След от пальца
         let lastX = null, lastY = null;
         function handleMove(e) {
             let x, y;
@@ -458,14 +464,14 @@
         }
         animateParticles();
 
-        // ========== ПЛАВАЮЩИЕ СЕРДЕЧКИ (лопаются) ==========
+        // ========== ПЛАВАЮЩИЕ СЕРДЕЧКИ (ИСПРАВЛЕННЫЕ ДЛЯ ТАЧА) ==========
         let floatingHearts = [];
         const popContainer = document.getElementById('popHeartsContainer');
 
         function createFloatingHeart() {
             const heartDiv = document.createElement('div');
             heartDiv.className = 'pop-heart';
-            const size = Math.floor(Math.random() * 28 + 24);
+            const size = Math.floor(Math.random() * 30 + 26);
             const leftPos = Math.random() * (window.innerWidth - 70);
             const topPos = Math.random() * (window.innerHeight - 100);
             heartDiv.style.left = leftPos + 'px';
@@ -473,19 +479,34 @@
             heartDiv.style.width = size + 'px';
             heartDiv.style.height = size + 'px';
             heartDiv.style.fontSize = size + 'px';
+            heartDiv.style.display = 'flex';
+            heartDiv.style.alignItems = 'center';
+            heartDiv.style.justifyContent = 'center';
             heartDiv.innerHTML = ['❤️','💖','💗','💓','🌸','💕','💘','🩷'][Math.floor(Math.random()*8)];
-            heartDiv.style.textAlign = 'center';
-            heartDiv.style.lineHeight = size + 'px';
-            heartDiv.addEventListener('click', (e) => {
+            
+            // Обработчик нажатия (отдельно для мыши и тача)
+            const handlePop = (e) => {
                 e.stopPropagation();
+                e.preventDefault();
+                // Визуальный отклик
                 heartDiv.style.transform = 'scale(0)';
-                setTimeout(() => heartDiv.remove(), 150);
-                addHeartBurst(e.clientX, e.clientY, 5);
-                addKiss();
-                floatingHearts = floatingHearts.filter(h => h !== heartDiv);
-            });
+                // Взрыв частиц
+                addHeartBurst(e.clientX || (e.touches ? e.touches[0].clientX : 0), 
+                               e.clientY || (e.touches ? e.touches[0].clientY : 0), 6);
+                addKiss();  // увеличиваем счётчик
+                setTimeout(() => {
+                    if (heartDiv.parentNode) heartDiv.remove();
+                    floatingHearts = floatingHearts.filter(h => h !== heartDiv);
+                }, 150);
+            };
+            
+            heartDiv.addEventListener('click', handlePop);
+            heartDiv.addEventListener('touchstart', handlePop, { passive: false });
+            
             popContainer.appendChild(heartDiv);
             floatingHearts.push(heartDiv);
+            
+            // Автоисчезновение через 12 секунд
             setTimeout(() => {
                 if (heartDiv.parentNode) {
                     heartDiv.style.opacity = '0';
@@ -500,30 +521,37 @@
                 if (h.parentNode) {
                     let left = parseFloat(h.style.left);
                     let top = parseFloat(h.style.top);
-                    left = Math.min(Math.max(left, 10), window.innerWidth - 60);
-                    top = Math.min(Math.max(top, 20), window.innerHeight - 80);
+                    left = Math.min(Math.max(left, 10), window.innerWidth - 70);
+                    top = Math.min(Math.max(top, 20), window.innerHeight - 90);
                     h.style.left = left + 'px';
                     h.style.top = top + 'px';
                 }
             });
         }
 
-        // Создаём плавающие сердечки
+        // Создаём плавающие сердечки (редко, чтобы не перегружать)
         setInterval(() => {
-            if (floatingHearts.length < 7) createFloatingHeart();
+            if (floatingHearts.length < 6) createFloatingHeart();
         }, 8000);
-        for (let i = 0; i < 3; i++) setTimeout(() => createFloatingHeart(), i * 1000);
+        // Несколько сразу при старте
+        setTimeout(() => { for(let i=0;i<3;i++) setTimeout(createFloatingHeart, i*500); }, 500);
 
-        // ========== ТАПЫ (сердечки + поцелуй) ==========
+        // ========== ТАПЫ ПО ЭКРАНУ (сердечки + поцелуй) ==========
         function onTap(e) {
             let x, y;
             if (e.touches) {
                 x = e.touches[0].clientX;
                 y = e.touches[0].clientY;
-                e.preventDefault();
+                // Не отменяем полностью, чтобы не мешать кликам по сердечкам, но отменяем скролл
+                if (e.cancelable) e.preventDefault();
             } else {
                 x = e.clientX;
                 y = e.clientY;
+            }
+            // Проверяем, что клик не по плавающему сердечку (чтобы не дублировать)
+            let target = e.target;
+            if (target && target.classList && target.classList.contains('pop-heart')) {
+                return; // сердечко само обработает
             }
             addHeartBurst(x, y, 6);
             addKiss();
@@ -569,7 +597,7 @@
             if (longPressTimer) clearTimeout(longPressTimer);
         });
 
-        // ========== ГИРОСКОП (по желанию) ==========
+        // ========== ГИРОСКОП ==========
         let gyroActive = false;
         let gyroX = 0, gyroY = 0;
         const gyroToggle = document.getElementById('gyroToggle');
@@ -577,7 +605,6 @@
             if (!gyroActive) return;
             gyroX = event.gamma || 0;
             gyroY = event.beta || 0;
-            // мягко влияем на частицы
             for (let p of particles) {
                 p.vx += gyroX * 0.025;
                 p.vy += gyroY * 0.02;
@@ -591,7 +618,6 @@
             gyroActive = e.target.checked;
             if (gyroActive) {
                 if (typeof DeviceOrientationEvent !== 'undefined' && DeviceOrientationEvent.requestPermission) {
-                    // iOS: запрос разрешения при первом клике на переключатель
                     DeviceOrientationEvent.requestPermission()
                         .then(permissionState => {
                             if (permissionState === 'granted') {
@@ -630,9 +656,9 @@
         }
         createBgBubbles();
 
-        // Приветственный взрыв сердечек
+        // Приветственный взрыв
         setTimeout(() => {
-            addHeartBurst(window.innerWidth/2, window.innerHeight/2, 10);
+            addHeartBurst(window.innerWidth/2, window.innerHeight/2, 12);
         }, 300);
     </script>
 </body>
